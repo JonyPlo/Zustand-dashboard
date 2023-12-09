@@ -1,6 +1,6 @@
 import { useShallow } from 'zustand/react/shallow'
 import { WhiteCard } from '../../components'
-import { useBearStore } from '../../stores/bears'
+import { useBearStore } from '../../stores'
 
 export const BearPage = () => {
   return (
@@ -81,9 +81,14 @@ export const BearsDisplay = () => {
   return (
     <WhiteCard>
       <h1>Osos</h1>
+
       <button onClick={doNothing}>No hace nada</button>
-      <button className='mt-2' onClick={addBear}>Agregar oso</button>
-      <button className='mt-2' onClick={clearBears}>Borrar osos</button>
+      <button className='mt-2' onClick={addBear}>
+        Agregar oso
+      </button>
+      <button className='mt-2' onClick={clearBears}>
+        Borrar osos
+      </button>
       <pre>{JSON.stringify(bears, null, 2)}</pre>
     </WhiteCard>
   )
