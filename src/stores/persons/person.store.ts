@@ -1,5 +1,6 @@
 import { type StateCreator, create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { customSessionStorage } from '../storages/session-storage.storage'
 
 interface PersonState {
   firstName: string
@@ -31,14 +32,17 @@ const storeApi: StateCreator<PersonState & Actions> = (set) => ({
 // En typescript si tenemos 2 interfaces separadas y queremos que una funcion o metodo retorne las 2 interfaces se lo puede hacer usando el operador and &
 export const usePersonStore = create<PersonState & Actions>()(
   // persist() es un middleware de zustand, y su trabajo es hacer que los states sean persistentes, es decir que por mas que actualicemos la pagina los states no se van a resetear, esto es posible ya que guarda los states en el storage del navegador
-  // Este middleware recibe 2 argumentos, el primero es toda la funcion que contiene el metodo create(), y el segundo es un objeto con opciones, una de las que uso es la opcion 'name', que es para indicar como queremos que se llame la key del local storage en donde guardaran estos states, y le puse de nombre 'person-storage', entonces cuando los valores de estos states cambien, en el local storage del navegador se creara una key llamada 'person-storage' y es la que almacenara los states
+  // Este middleware recibe 2 argumentos, el primero es toda la funcion que contiene el metodo create(), y el segundo es un objeto con opciones para personalizar el middleware.
   // El middleware persist no solo guarda los states en el local storage, si no que tambien se encargara de observar la key 'person-storage' del local storage para establecer y actualizar los states
   persist(
-    // Primer argumento de persist
+    // Primer argumento de persist - Store Api
     storeApi,
-    // Segundo argumento de persist
+    // Segundo argumento de persist - Options
     {
+      // La opcion 'name' es para indicar como queremos que se llame la key del local storage en donde se guardaran los states. En este caso le puse de nombre 'person-storage', entonces cuando los valores de estos states cambien, en el local storage del navegador se creara una key llamada 'person-storage' con los datos.
       name: 'person-storage',
+      // La opcion 'storage' es para elegir en que storage queremos almacenar los datos, ya sea en el local storage o en sesion storage
+      storage: customSessionStorage,
     }
   )
 )
