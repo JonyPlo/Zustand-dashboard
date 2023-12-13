@@ -9,8 +9,8 @@ import { WhiteCard } from '../../components'
 import { useBearStore, usePersonStore } from '../../stores'
 
 export const Dashboard = () => {
-  const totalBears = useBearStore((store) => store.computed.totalBears)
-  const firstName = usePersonStore(state => state.firstName)
+  const totalBears = useBearStore((state) => state.totalBears())
+  const firstName = usePersonStore((state) => state.firstName)
 
   return (
     <>
