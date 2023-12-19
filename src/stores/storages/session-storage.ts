@@ -7,9 +7,11 @@ const storageApi: StateStorage = {
     const data = sessionStorage.getItem(name)
     return data
   },
+
   setItem: (name: string, value: string): void => {
     sessionStorage.setItem(name, value)
   },
+
   removeItem: (name: string): void => {
     console.log('removeItem', { name })
   },

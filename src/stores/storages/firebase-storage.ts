@@ -10,9 +10,7 @@ let debounceData: number
 const storageApi: StateStorage = {
   getItem: async (name: string): Promise<string | null> => {
     try {
-      const data = await fetch(`${firebaseUrl}/${name}.json`).then((res) =>
-        res.json()
-      )
+      const { data } = await axios.get(`${firebaseUrl}/${name}.json`)
 
       return JSON.stringify(data)
     } catch (error) {
@@ -25,10 +23,10 @@ const storageApi: StateStorage = {
     try {
       if (value) clearInterval(debounceData)
 
-      debounceData = setTimeout(() => {
-        axios.put(`${firebaseUrl}/${name}.json`, value)
+      debounceData = setTimeout(async (): Promise<string | null> => {
+        await axios.put(`${firebaseUrl}/${name}.json`, value)
 
-        return
+        return null
       }, 600)
     } catch (error) {
       console.log(error)

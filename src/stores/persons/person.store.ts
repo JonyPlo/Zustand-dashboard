@@ -1,7 +1,7 @@
 import { type StateCreator, create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 // import { customSessionStorage } from '../storages/session-storage'
-import { firebaseStorage } from '../storages/firebase-storage'
+// import { firebaseStorage } from '../storages/firebase-storage'
 
 interface PersonState {
   firstName: string
@@ -23,7 +23,7 @@ const storeApi: StateCreator<
   lastName: '',
 
   setFirstName: (value: string) =>
-    // El metodo set recibe tiene 3 argumentos, el primero es un callback en el que se encarga de establecer los nuevos states, tambien puede ser un solo objeto con las propiedades, el segundo argumento es un booleano que indica si se podra reemplazar el state o no, por defecto es false, pero si lo ponemos en true solo dejara cambiar un state una sola vez, y el tercer argumento es un string y sirve para poner un nombre a la accion que se mostrara en las devtools de redux en el navegador
+    // El metodo set tiene 3 argumentos, el primero es un callback en el que se encarga de establecer los nuevos states, tambien puede ser un solo objeto con las propiedades, el segundo argumento es un booleano que indica si se podra reemplazar el state o no, por defecto es false, pero si lo ponemos en true solo dejara cambiar el state una sola vez, y el tercer argumento es un string y sirve para poner un nombre a la accion que se mostrara en las devtools de redux en el navegador
     set(
       {
         firstName: value,
@@ -58,7 +58,7 @@ export const usePersonStore = create<PersonState & Actions>()(
         name: 'person-storage',
         // La opcion 'storage' es para elegir en que storage queremos almacenar los datos, ya sea en el local storage o en sesion storage
         // storage: customSessionStorage,
-        storage: firebaseStorage,
+        // storage: firebaseStorage,
       }
     )
   )
