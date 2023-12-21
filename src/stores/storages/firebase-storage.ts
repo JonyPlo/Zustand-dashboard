@@ -12,6 +12,7 @@ const storageApi: StateStorage = {
     try {
       const { data } = await axios.get(`${firebaseUrl}/${name}.json`)
 
+      // Recordar que la propiedad getItem SIEMPRE debe retornar un objeto en forma de string, ya que esta es la forma para poder leer los datos, en este caso, la peticion nos devuelve "data" que es un objeto literal de Javascript, y con JSON.stringify() convertimos ese objeto en un string para que Zustand puedan setear los estados
       return JSON.stringify(data)
     } catch (error) {
       console.log(error)
