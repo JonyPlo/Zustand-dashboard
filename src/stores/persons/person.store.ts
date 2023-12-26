@@ -1,5 +1,6 @@
 import { type StateCreator, create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
+import { useWeddingBoundStore } from '../wedding'
 // import { customSessionStorage } from '../storages/session-storage'
 // import { firebaseStorage } from '../storages/firebase-storage'
 
@@ -63,3 +64,14 @@ export const usePersonStore = create<PersonState & Actions>()(
     )
   )
 )
+
+// El metodo subscribe de un store nos permite poder transferir informacion del state de un store al state de otro store, este metodo emite 2 parametros, uno es nextState y el otro es prevState, prevState es el valor de los estados de como estaban antes de un cambio y nextState es como estan los states actualmente
+usePersonStore.subscribe((nextState /*prevState*/) => {
+  // nextState es un objeto que contiene todos los states del store usePersonStore
+  const { firstName, lastName } = nextState
+
+  // En este caso importamos el store useWeddingBoundStore, accedemos a los metodos setFirstName y setLastName los cuales esperan un argumento cada uno, y mandamos como argumento los states del store usePersonStore, y de esta forma cada vez que los states firstName y lastName cambien en el store usePersonStore, se ejecutaran los metodos del store useWeddingBoundStore para tambien modificar sus states
+  // Tener en cuenta que 2 stores no deberían transmitirse informacion entre si porque eso podría producir una dependencia cíclica
+  useWeddingBoundStore.getState().setFirstName(firstName)
+  useWeddingBoundStore.getState().setLastName(lastName)
+})
